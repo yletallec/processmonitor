@@ -1,0 +1,11 @@
+# macOS folder custom attributes
+.DS_Store
+
+# Visual Studio Code
+.vscode
+
+# Byte-compiled
+__pycache__
+
+# Generated reports
+*.csv
