@@ -12,8 +12,8 @@ def mem_to_octet(mem):
     elif last_char == "K":
         factor = 1024
     try:
-        val = int(mem[:-1])
+        val = int(mem[:-1] if factor > 1 else mem)
     except:
         return None
-    return val * factor
+    return val * factor if val >= 0 else None
 
