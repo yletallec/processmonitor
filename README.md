@@ -30,7 +30,7 @@ Options:
 
 ## Installation
 
-Process Monitor requires macOS with Python 3.7+ and docopt library to run.
+Process Monitor requires macOS with leaks utility, Python 3.7+ and docopt library to run.
 ```sh
 git
 ```
@@ -38,14 +38,16 @@ git
 ![alt text](https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRzAr6lzIqjmW0w9fs-udxLHuobDHAB1W7RiQ&usqp=CAU)
 
 If missing, typing 'git' in a Terminal will launch command line developer tools installation.
-python3 and pip3 are bundled with command line developer tools.
+leaks, python3 and pip3 are bundled with command line developer tools.
 
 ```sh
+➜ which leaks
+/usr/bin/leaks
 ➜ which git
 /usr/bin/git
 ➜ which python3
 /usr/bin/python3
-➜ which pips
+➜ which pip3
 /usr/bin/pip3
 ```
 
