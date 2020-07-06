@@ -1,0 +1,16 @@
+language: python
+matrix:
+  include:
+    # ======= OSX ========
+    - name: "Python 3.7.5 on macOS 10.14"
+      os: osx
+      osx_image: xcode10.2  # Python 3.7.5 running on macOS 10.14.3
+      language: shell       # 'language: python' is an error on Travis CI macOS
+      before_install:
+        - python3 --version
+        - pip3 install -U pip
+        - pip3 install -U pytest
+        - pip3 install pytest-cov
+        - pip3 install codecov
+      script: python3 -m pytest --cov=./
+      after_success: python3 -m codecov

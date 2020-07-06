@@ -1,6 +1,6 @@
 # Process Monitor
 
-[![Build Status](https://travis-ci.org/yletallec/processmonitor.svg?branch=master)](https://travis-ci.org/yletallec/processmonitor)
+[![Build Status](https://travis-ci.com/yletallec/processmonitor.svg?branch=master)](https://travis-ci.com/github/yletallec/processmonitor)
 
 Process Monitor is a Python console application collecting metrics for a process and its children.
   - % of CPU used
