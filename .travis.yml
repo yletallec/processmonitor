@@ -12,5 +12,6 @@ matrix:
         - pip3 install -U pytest
         - pip3 install pytest-cov
         - pip3 install codecov
+        - pip3 install docopt
       script: python3 -m pytest --cov=./
       after_success: python3 -m codecov

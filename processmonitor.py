@@ -25,24 +25,22 @@ def call_repeatedly(interval, func, *args):
     stopped = Event()
     def loop():
         iteration = 1
-        while not stopped.wait(interval): # the first call is in `interval` secs
+        while not stopped.wait(interval - time.time() % interval):
             func(*args, iteration)
             iteration = iteration + 1
     Thread(target=loop).start()    
     return stopped.set
 
-def print_average(metrics):
-    size = len(metrics)
-    if size == 0:
-        return
-    cpu_avg = round(sum(metric.cpu for metric in metrics) / size, 1)
-    mem_avg = int(sum(metric.mem for metric in metrics) / size)
-    files_avg = int(sum(metric.files for metric in metrics) / size)
-    print(f"Metrics Avg.: %CPU: {cpu_avg}, MEMORY(B): {mem_avg}, OPEN FILES: {files_avg}")
+def print_average():
+    cpu_avg, mem_avg, files_avg = Process.metrics_average()
+    if cpu_avg != None and mem_avg != None and files_avg != None:
+        print(f"Metrics Avg.: %CPU: {cpu_avg}, MEMORY(B): {mem_avg}, OPEN FILES: {files_avg}")
+        return True
+    return False
 
 def generate_report(name, duration, interval):
     if len(Process.metrics) == 0:
-        return
+        return False
     ts = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     filename = f"{ts}_process-metrics-report_{name}_{duration}_{interval}.csv"
     with open(f"{filename}", mode='w') as report:
@@ -58,11 +56,13 @@ def generate_report(name, duration, interval):
             iteration = iteration + 1
     reportpath = f"./{filename}"
     print(f"Metrics report: {reportpath}")
-    return reportpath
+    return True
 
 def raise_memory_leak_warning(name):
     if (Process.has_memory_leaks(name)):
         print(f"WARNING: possible memory leaks detected for process \'{name}\'")
+        return True
+    return False
         
 def main():
     args = docopt(__doc__, version='Process Monitor 1.0')
@@ -81,7 +81,7 @@ def main():
     cancel_future_calls = call_repeatedly(interval, Process.monitor, name)
     time.sleep(duration)
     cancel_future_calls()
-    print_average(Process.metrics)
+    print_average()
     generate_report(name, duration, interval)
     raise_memory_leak_warning(name)
 

@@ -14,16 +14,27 @@ class Process:
     metrics = []
 
     @staticmethod
+    def metrics_average():
+        size = len(Process.metrics)
+        if size == 0:
+            return None, None, None
+        cpu_avg = round(sum(metric.cpu for metric in Process.metrics) / size, 1)
+        mem_avg = int(sum(metric.mem for metric in Process.metrics) / size)
+        files_avg = int(sum(metric.files for metric in Process.metrics) / size)
+        return cpu_avg, mem_avg, files_avg
+
+    @staticmethod
     def monitor(name, iteration):
         if Process.exists(name):
             cpu = Process.get_cpu_usage(name)
             mem = Process.get_private_memory_usage(name)
             files = Process.get_number_of_open_files(name)
             Process.metrics.append(Process.Metric(cpu,mem,files))
-            itstr = "{:03}".format(iteration)
-            print(f"Metrics #{itstr}: %CPU: {cpu}, MEMORY(B): {mem}, OPEN FILES: {files}")
+            print(f"Metrics #{iteration}: %CPU: {cpu}, MEMORY(B): {mem}, OPEN FILES: {files}")
+            return True
         else:
             print(f"process \'{name}\' unknown")
+            return False
 
     @staticmethod
     def exists(name):
@@ -57,7 +68,7 @@ class Process:
         except:
             return None
         rows = output.decode('utf-8').strip().split('\n')
-        values = [row[row.strip().rfind(' '):].strip() for row in rows]
+        values = [row[row.strip().rfind(' '):].strip().rstrip('+') for row in rows]
         return sum(utils.mem_to_octet(val) for val in values)
 
     @staticmethod
@@ -73,7 +84,7 @@ class Process:
     def has_memory_leaks(name):
         pids = Process.get_pids(name)
         for pid in pids:
-            cmd = f"leaks {pid}"
+            cmd = f"sudo leaks {pid}"
             rc = subprocess.call(
                     cmd,
                     shell=True,
