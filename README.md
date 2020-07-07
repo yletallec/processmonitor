@@ -32,7 +32,7 @@ Options:
 
 Process Monitor requires macOS 10.14.3+ with command line developer tools.
 It requires elevated privileges, leaks utility and docopt library to run.
-It requires elevated privileges, pytest, pytest-cov and codecov libraries to test.
+It requires elevated privileges, pytest, mock, pytest-cov and codecov libraries to test.
 ```sh
 git
 ```
@@ -53,6 +53,7 @@ leaks, python3 and pip3 are bundled with command line developer tools.
 ```sh
 ➜ pip3 install -U pip
 ➜ pip3 install -U pytest
+➜ pip3 install mock
 ➜ pip3 install pytest-cov
 ➜ pip3 install codecov
 ➜ pip3 install docopt
@@ -74,10 +75,10 @@ leaks, python3 and pip3 are bundled with command line developer tools.
               Process Monitor
 ---------------------------------------------
 Monitoring process 'Google' every 5 sec for 15 sec
-Waiting 5 sec for first measurement to begin...
-Metrics #1: %CPU: 1.3, MEMORY(B): 1187483648, OPEN FILES: 751
-Metrics #2: %CPU: 0.5, MEMORY(B): 1184337920, OPEN FILES: 751
-Metrics Avg.: %CPU: 0.9, MEMORY(B): 1185910784, OPEN FILES: 751
-Metrics report: ./2020-07-07_11-33-19_process-metrics-report_Google_15_5.csv
+Metrics #1: %CPU: 1.6, MEMORY(B): 435159040, OPEN FILES: 419
+Metrics #2: %CPU: 1.3, MEMORY(B): 435159040, OPEN FILES: 421
+Metrics #3: %CPU: 1.0, MEMORY(B): 427819008, OPEN FILES: 416
+Metrics Avg.: %CPU: 1.3, MEMORY(B): 432712362, OPEN FILES: 418
+Metrics report: ./2020-07-08_18-04-30_process-metrics-report_Google_15_5.csv
 WARNING: possible memory leaks detected for process 'Google'
 ```

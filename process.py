@@ -1,7 +1,6 @@
 import subprocess
 import utils
 from dataclasses import dataclass
-from typing import List
 
 class Process:
 

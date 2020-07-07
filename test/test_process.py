@@ -8,9 +8,7 @@ def test_process_metrics_average_empty(empty_process_metrics):
 def test_process_metrics_average_filled(fill_process_metrics):
     fill_process_metrics
     cpu_avg, mem_avg, files_avg = Process.metrics_average()
-    assert cpu_avg == 0.2
-    assert mem_avg == 2048
-    assert files_avg == 2
+    assert cpu_avg == 0.2 and mem_avg == 2048 and files_avg == 2
 
 def test_process_monitor_ok(running_process_name):
     assert Process.monitor(running_process_name, 0) == True

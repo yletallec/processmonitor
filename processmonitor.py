@@ -13,6 +13,7 @@ Options:
 """
 
 from docopt import docopt
+from utils import string_to_integer
 from process import Process
 from threading import Event, Thread
 from datetime import datetime
@@ -20,6 +21,13 @@ import os
 import sys
 import csv
 import time
+from enum import IntEnum
+
+class ExitStatus(IntEnum):
+    OK = 0
+    BAD_DURATION = 1
+    BAD_INTERVAL = 2
+    INTERVAL_GT_DURATION = 3
 
 def call_repeatedly(interval, func, *args):
     stopped = Event()
@@ -70,8 +78,21 @@ def main():
         args['<sampling_interval>'] = 5
 
     name = args['<process_name>']
-    duration = int(args['<overall_duration>'])
-    interval = int(args['<sampling_interval>'])
+    try:
+        duration = string_to_integer(args['<overall_duration>'])
+    except:
+        print("duration parameter is not an integer")
+        return ExitStatus.BAD_DURATION
+
+    try:
+        interval = string_to_integer(args['<sampling_interval>'])
+    except:
+        print("interval parameter is not an integer")
+        return ExitStatus.BAD_INTERVAL
+
+    if interval > duration:
+        print("interval parameter is greater than duration parameter")
+        return ExitStatus.INTERVAL_GT_DURATION
 
     print("---------------------------------------------")
     print("              Process Monitor")
@@ -84,8 +105,12 @@ def main():
     print_average()
     generate_report(name, duration, interval)
     raise_memory_leak_warning(name)
+    return ExitStatus.OK
 
-if __name__ == '__main__':
-    if len(sys.argv) == 1:
-        sys.argv.append('-h')
-    sys.exit(main())
+def init():
+    if __name__ == '__main__':
+        if len(sys.argv) == 1:
+            sys.argv.append('-h')
+        sys.exit(main())
+
+init()

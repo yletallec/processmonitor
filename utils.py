@@ -17,3 +17,11 @@ def mem_to_octet(mem):
         return None
     return val * factor if val >= 0 else None
 
+def string_to_integer(val):
+    try:
+        val = float(val)
+        if not val.is_integer():
+            raise Exception("Not an integer")
+    except ValueError:
+        raise
+    return int(val)

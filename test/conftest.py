@@ -2,6 +2,30 @@ import pytest
 from process import Process
 
 @pytest.fixture
+def args_ok(running_process_name):
+    return ['', running_process_name, '2', '1']
+
+@pytest.fixture
+def args_string_duration(running_process_name):
+    return ['', running_process_name, 'string']
+
+@pytest.fixture
+def args_float_duration(running_process_name):
+    return ['', running_process_name, '2.2']
+
+@pytest.fixture
+def args_string_interval(running_process_name):
+    return ['', running_process_name, '2', 'string']
+
+@pytest.fixture
+def args_float_interval(running_process_name):
+    return ['', running_process_name, '2', '1.1']
+
+@pytest.fixture
+def args_interval_gt_duration(running_process_name):
+    return ['', running_process_name, '1', '2']
+
+@pytest.fixture
 def running_process_name():
     return "distnoted"
 

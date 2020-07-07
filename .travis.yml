@@ -10,6 +10,7 @@ matrix:
         - python3 --version
         - pip3 install -U pip
         - pip3 install -U pytest
+        - pip3 install mock 
         - pip3 install pytest-cov
         - pip3 install codecov
         - pip3 install docopt
